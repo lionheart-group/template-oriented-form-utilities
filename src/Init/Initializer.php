@@ -16,6 +16,11 @@ class Initializer {
 
         // Prepare tables
         Migrate::migrate();
+
+        // Schedule garbage collection cron event
+        if (!wp_next_scheduled('tofu_garbage_collection')) {
+            wp_schedule_event(time(), 'daily', 'tofu_garbage_collection');
+        }
     }
 
     public static function deactivate() {
@@ -26,6 +31,12 @@ class Initializer {
         // Migrate::dropTable(Record::getTableName());
         // Migrate::dropTable(Session::getTableName());
         // Migrate::dropTable(Migrate::getTableName());
+
+        // Clear scheduled garbage collection
+        $timestamp = wp_next_scheduled('tofu_garbage_collection');
+        if ($timestamp) {
+            wp_unschedule_event($timestamp, 'tofu_garbage_collection');
+        }
     }
 
     public static function upgrade() {

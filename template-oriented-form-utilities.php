@@ -33,7 +33,6 @@ define('TOFU_PLUGIN_DIR', plugin_dir_path(__FILE__));
 // Load autoloader
 require_once __DIR__ . '/vendor/autoload.php';
 
-use TofuPlugin\Consts;
 use TofuPlugin\Helpers\Session;
 use TofuPlugin\Helpers\Uploader;
 use TofuPlugin\Init\Initializer;
@@ -69,14 +68,10 @@ add_action('wp_mail_failed', function ($wp_error) {
     Logger::error('Mail sending failed: ' . $wp_error->get_error_message());
 }, 10, 1);
 
-// Gobage collection for expired sessions
-add_action('init', function () {
-    $rand = mt_rand(1, 100);
-
-    if ($rand <= Consts::GARBAGE_COLLECTION_PERCENTAGE) {
-        Session::clearExpired();
-        Uploader::clearExpired();
-    }
+// Garbage collection for expired sessions and uploads
+add_action('tofu_garbage_collection', function () {
+    Session::clearExpired();
+    Uploader::clearExpired();
 });
 
 // Initialize endpoint

@@ -40,9 +40,4 @@ final class Consts
      * Uploaded files temporary input fild name.
      */
     public const UPLOADED_FILES_INPUT_NAME = '__tofu_uploaded_files';
-
-    /**
-     * Percentage for garbage collection.
-     */
-    public const GARBAGE_COLLECTION_PERCENTAGE = 10;
 }
