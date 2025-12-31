@@ -12,11 +12,7 @@ class Record extends AbstractModels {
     protected static function columns(): array
     {
         return [
-            new DatabaseModelColumn(
-                name: 'form_id',
-                type: DatabaseModelColumn::COLUMN_STRING,
-                required: true,
-            ),
+            new DatabaseModelColumn('form_id', DatabaseModelColumn::COLUMN_STRING, true),
         ];
     }
 }

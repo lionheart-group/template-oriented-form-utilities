@@ -6,11 +6,21 @@ use GUMP;
 
 class MailAddress
 {
-    public function __construct(
-        public readonly string $email,
-        public readonly string $name = '',
-    )
+    /** @var string */
+    public $email;
+
+    /** @var string */
+    public $name;
+
+    /**
+     * @param string $email
+     * @param string $name
+     */
+    public function __construct(string $email, string $name = '')
     {
+        $this->email = $email;
+        $this->name = $name;
+
         // Validate the email addresses.
         if (
             GUMP::is_valid(

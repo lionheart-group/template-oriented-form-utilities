@@ -11,70 +11,53 @@ use TofuPlugin\Helpers\Validate;
  */
 class MailRecipientsConfig
 {
+    /** @var string Recipient email address. */
+    public $recipientEmail;
+
+    /** @var string|null Recipient cc email address. */
+    public $recipientCcEmail;
+
+    /** @var string|null Recipient bcc email address. */
+    public $recipientBccEmail;
+
+    /** @var string|null Recipient email subject. */
+    public $subject;
+
+    /** @var string|null Recipient email subject template. */
+    public $subjectPath;
+
+    /** @var string|null Recipient email body. */
+    public $mailBody;
+
+    /** @var string|null Recipient email body template. */
+    public $mailBodyPath;
+
+    /**
+     * @param string $recipientEmail Recipient email address.
+     * @param string|null $recipientCcEmail Recipient cc email address.
+     * @param string|null $recipientBccEmail Recipient bcc email address.
+     * @param string|null $subject Recipient email subject.
+     * @param string|null $subjectPath Recipient email subject template.
+     * @param string|null $mailBody Recipient email body.
+     * @param string|null $mailBodyPath Recipient email body template.
+     */
     public function __construct(
-        /**
-         * Recipient email address.
-         *
-         * If you set `{field}`, it will be replaced with the value of the field.
-         * For example, if you set `{email}`, it will be replaced with the value of the `email` field.
-         *
-         * @var string
-         */
-        public readonly string $recipientEmail,
-
-        /**
-         * Recipient cc email address.
-         * If you want to skip the recipient cc email, set this to null.
-         *
-         * If you set `{field}`, it will be replaced with the value of the field.
-         * For example, if you set `{cc}`, it will be replaced with the value of the `cc` field.
-         *
-         * @var ?string
-         */
-        public readonly ?string $recipientCcEmail = null,
-
-        /**
-         * Recipient bcc email address.
-         * If you want to skip the recipient bcc email, set this to null.
-         *
-         * If you set `{field}`, it will be replaced with the value of the field.
-         * For example, if you set `{bcc}`, it will be replaced with the value of the `bcc` field.
-         *
-         * @var ?string
-         */
-        public readonly ?string $recipientBccEmail = null,
-
-        /**
-         * Recipient email subject.
-         * You can choose to set a static subject here or use a template path.
-         *
-         * @var ?string
-         */
-        public readonly ?string $subject = null,
-
-        /**
-         * Recipient email subject template.
-         * You can choose to set a template path here or use a static subject.
-         *
-         * @var ?string
-         */
-        public readonly ?string $subjectPath = null,
-
-        /**
-         * Recipient email body.
-         * You can choose to set a static mail body here or use a template path.
-         * @var ?string
-         */
-        public readonly ?string $mailBody = null,
-
-        /**
-         * Recipient email body template.
-         * You can choose to set a template path here or use a static mail body.
-         *
-         * @var ?string
-         */
-        public readonly ?string $mailBodyPath = null,
+        string $recipientEmail,
+        ?string $recipientCcEmail = null,
+        ?string $recipientBccEmail = null,
+        ?string $subject = null,
+        ?string $subjectPath = null,
+        ?string $mailBody = null,
+        ?string $mailBodyPath = null
     ) {
+        $this->recipientEmail = $recipientEmail;
+        $this->recipientCcEmail = $recipientCcEmail;
+        $this->recipientBccEmail = $recipientBccEmail;
+        $this->subject = $subject;
+        $this->subjectPath = $subjectPath;
+        $this->mailBody = $mailBody;
+        $this->mailBodyPath = $mailBodyPath;
+
         /**
          * Ensure that either subject or subjectPath is set.
          */

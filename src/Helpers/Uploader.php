@@ -39,11 +39,11 @@ class Uploader
         }
 
         return new UploadedFile(
-            name: $name,
-            fileName: $fileName,
-            mimeType: $mimeType,
-            tempName: $tempName,
-            size: $size,
+            $name,
+            $fileName,
+            $mimeType,
+            $tempName,
+            $size
         );
     }
 

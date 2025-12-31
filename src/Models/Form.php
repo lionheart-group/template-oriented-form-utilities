@@ -19,45 +19,48 @@ use TofuPlugin\Structure\UploadedFile;
 class Form
 {
     /**
+     * Configuration for the form.
+     *
+     * @var FormConfig
+     */
+    public $config;
+
+    /**
      * Input values.
      *
      * @var FieldValueCollection
      */
-    protected FieldValueCollection $values;
+    protected $values;
 
     /**
      * Error values.
      *
      * @var ValidationErrorCollection
      */
-    protected ValidationErrorCollection $errors;
+    protected $errors;
 
     /**
      * Uploaded files.
      *
      * @var UploadedFileCollection
      */
-    protected UploadedFileCollection $files;
+    protected $files;
 
     /**
      * Flush session value.
      *
-     * @var ?string
+     * @var string|null
      */
-    protected ?string $flushValue = null;
+    protected $flushValue = null;
 
     /**
      * Form constructor.
+     *
+     * @param FormConfig $config Configuration for the form.
      */
-    public function __construct(
-        /**
-         * Configuration for the form.
-         *
-         * @var FormConfig
-         */
-        public readonly FormConfig $config,
-    )
+    public function __construct(FormConfig $config)
     {
+        $this->config = $config;
         $this->values = new FieldValueCollection();
         $this->errors = new ValidationErrorCollection();
         $this->files = new UploadedFileCollection();
@@ -84,11 +87,11 @@ class Form
             if (isset($sessionValues['files']) && $sessionValues['files']) {
                 foreach ($sessionValues['files'] as $fileData) {
                     $this->files->addFile(new UploadedFile(
-                        name: $fileData['name'] ?? '',
-                        fileName: $fileData['fileName'] ?? '',
-                        mimeType: $fileData['mimeType'] ?? '',
-                        tempName: $fileData['tempName'] ?? '',
-                        size: $fileData['size'] ?? 0,
+                        $fileData['name'] ?? '',
+                        $fileData['fileName'] ?? '',
+                        $fileData['mimeType'] ?? '',
+                        $fileData['tempName'] ?? '',
+                        $fileData['size'] ?? 0
                     ));
                 }
             }
@@ -274,7 +277,8 @@ class Form
 
         // If the URL is not set, trigger the confirmation action
         if (empty($url)) {
-            return $this->actionConfirm(skipVerify: true);
+            $this->actionConfirm(true);
+            return;
         }
 
         wp_redirect($url);
@@ -353,8 +357,8 @@ class Form
 
             // Set mail from
             $mail->setFrom(new MailAddress(
-                email: $this->config->mail->fromEmail,
-                name: $this->config->mail->fromName,
+                $this->config->mail->fromEmail,
+                $this->config->mail->fromName
             ));
 
             // Set mail to

@@ -9,28 +9,27 @@ namespace TofuPlugin\Structure;
  */
 class MailConfig
 {
+    /** @var string From email address. */
+    public $fromEmail;
+
+    /** @var string From name. */
+    public $fromName;
+
+    /** @var MailRecipientsCollection Email recipient collection. */
+    public $recipients;
+
+    /**
+     * @param string $fromEmail From email address.
+     * @param string $fromName From name.
+     * @param MailRecipientsCollection $recipients Email recipient collection.
+     */
     public function __construct(
-        /**
-         * From email address.
-         * This is usually the same as the site URL.
-         *
-         * @var string
-         */
-        public readonly string $fromEmail,
-
-        /**
-         * From name.
-         *
-         * @var string
-         */
-        public readonly string $fromName,
-
-        /**
-         * Email recipient collection.
-         *
-         * @var MailRecipientsCollection
-         */
-        public readonly MailRecipientsCollection $recipients,
+        string $fromEmail,
+        string $fromName,
+        MailRecipientsCollection $recipients
     ) {
+        $this->fromEmail = $fromEmail;
+        $this->fromName = $fromName;
+        $this->recipients = $recipients;
     }
 }

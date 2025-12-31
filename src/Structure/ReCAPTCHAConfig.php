@@ -4,28 +4,27 @@ namespace TofuPlugin\Structure;
 
 class ReCAPTCHAConfig
 {
+    /** @var string Site key for reCAPTCHA. */
+    public $siteKey;
+
+    /** @var string Secret key for reCAPTCHA. */
+    public $secretKey;
+
+    /** @var float Threshold score for reCAPTCHA v3. */
+    public $threshold;
+
+    /**
+     * @param string $siteKey Site key for reCAPTCHA.
+     * @param string $secretKey Secret key for reCAPTCHA.
+     * @param float $threshold Threshold score for reCAPTCHA v3.
+     */
     public function __construct(
-        /**
-         * Site key for reCAPTCHA.
-         *
-         * @var string
-         */
-        public readonly string $siteKey,
-
-        /**
-         * Secret key for reCAPTCHA.
-         *
-         * @var string
-         */
-        public readonly string $secretKey,
-
-        /**
-         * Threshold score for reCAPTCHA v3.
-         *
-         * @var float
-         */
-        public readonly float $threshold = 0.5,
-    )
-    {
+        string $siteKey,
+        string $secretKey,
+        float $threshold = 0.5
+    ) {
+        $this->siteKey = $siteKey;
+        $this->secretKey = $secretKey;
+        $this->threshold = $threshold;
     }
 }

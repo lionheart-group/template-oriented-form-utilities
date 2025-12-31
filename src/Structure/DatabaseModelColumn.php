@@ -16,28 +16,27 @@ class DatabaseModelColumn
     const COLUMN_FLOAT = 'float';
     const COLUMN_DATETIME = 'datetime';
 
+    /** @var string Column name. */
+    public $name;
+
+    /** @var string Column type. */
+    public $type;
+
+    /** @var bool Is the column required. */
+    public $required;
+
+    /**
+     * @param string $name Column name.
+     * @param string $type Column type.
+     * @param bool $required Is the column required.
+     */
     public function __construct(
-        /**
-         * Column name.
-         *
-         * @var string
-         */
-        public readonly string $name,
-
-        /**
-         * Column type.
-         *
-         * @var string
-         */
-        public readonly string $type,
-
-        /**
-         * Is the column required.
-         *
-         * @var bool
-         */
-        public readonly bool $required = false,
-    )
-    {
+        string $name,
+        string $type,
+        bool $required = false
+    ) {
+        $this->name = $name;
+        $this->type = $type;
+        $this->required = $required;
     }
 }

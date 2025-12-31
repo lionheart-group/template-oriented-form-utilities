@@ -11,58 +11,51 @@ namespace TofuPlugin\Structure;
  */
 class FormConfig
 {
+    /** @var string Key for the form item. */
+    public $key;
+
+    /** @var string Form name. */
+    public $name;
+
+    /** @var TemplateConfig Template setting. */
+    public $template;
+
+    /** @var MailConfig Mail setting. */
+    public $mail;
+
+    /** @var ValidationConfig Validation setting. */
+    public $validation;
+
+    /** @var bool Enabled to save the form data to the database. */
+    public $saveToDatabase;
+
+    /** @var ReCAPTCHAConfig|null reCAPTCHA setting. */
+    public $recaptcha;
+
+    /**
+     * @param string $key Key for the form item.
+     * @param string $name Form name.
+     * @param TemplateConfig $template Template setting.
+     * @param MailConfig $mail Mail setting.
+     * @param ValidationConfig $validation Validation setting.
+     * @param bool $saveToDatabase Enabled to save the form data to the database.
+     * @param ReCAPTCHAConfig|null $recaptcha reCAPTCHA setting.
+     */
     public function __construct(
-        /**
-         * Key for the form item.
-         *
-         * @var string
-         */
-        public readonly string $key,
-
-        /**
-         * Form name.
-         *
-         * @var string
-         */
-        public readonly string $name,
-
-        /**
-         * Template setting.
-         *
-         * @var TemplateConfig
-         */
-        public readonly TemplateConfig $template,
-
-        /**
-         * Mail setting.
-         *
-         * @var MailConfig
-         */
-        public readonly MailConfig $mail,
-
-        /**
-         * Validation setting.
-         *
-         * @var ValidationConfig
-         */
-        public readonly ValidationConfig $validation,
-
-        /**
-         * Enabled to save the form data to the database.
-         * If you want to skip saving the form data, set this to false.
-         *
-         * @var bool
-         * @todo Implement the save to database functionality.
-         */
-        public readonly bool $saveToDatabase = false,
-
-        /**
-         * reCAPTCHA setting.
-         *
-         * @var ?ReCAPTCHAConfig
-         */
-        public readonly ?ReCAPTCHAConfig $recaptcha = null,
-    )
-    {
+        string $key,
+        string $name,
+        TemplateConfig $template,
+        MailConfig $mail,
+        ValidationConfig $validation,
+        bool $saveToDatabase = false,
+        ?ReCAPTCHAConfig $recaptcha = null
+    ) {
+        $this->key = $key;
+        $this->name = $name;
+        $this->template = $template;
+        $this->mail = $mail;
+        $this->validation = $validation;
+        $this->saveToDatabase = $saveToDatabase;
+        $this->recaptcha = $recaptcha;
     }
 }

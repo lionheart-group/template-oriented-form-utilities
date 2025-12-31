@@ -12,26 +12,10 @@ class Session extends AbstractModels {
     protected static function columns(): array
     {
         return [
-            new DatabaseModelColumn(
-                name: 'form_id',
-                type: DatabaseModelColumn::COLUMN_STRING,
-                required: true,
-            ),
-            new DatabaseModelColumn(
-                name: 'session_key',
-                type: DatabaseModelColumn::COLUMN_STRING,
-                required: true,
-            ),
-            new DatabaseModelColumn(
-                name: 'session_value',
-                type: DatabaseModelColumn::COLUMN_STRING,
-                required: true,
-            ),
-            new DatabaseModelColumn(
-                name: 'expiration',
-                type: DatabaseModelColumn::COLUMN_DATETIME,
-                required: true,
-            ),
+            new DatabaseModelColumn('form_id', DatabaseModelColumn::COLUMN_STRING, true),
+            new DatabaseModelColumn('session_key', DatabaseModelColumn::COLUMN_STRING, true),
+            new DatabaseModelColumn('session_value', DatabaseModelColumn::COLUMN_STRING, true),
+            new DatabaseModelColumn('expiration', DatabaseModelColumn::COLUMN_DATETIME, true),
         ];
     }
 

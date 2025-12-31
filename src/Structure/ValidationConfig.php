@@ -2,6 +2,7 @@
 
 namespace TofuPlugin\Structure;
 
+use Closure;
 use TofuPlugin\Models\FieldValueCollection;
 use TofuPlugin\Models\ValidationErrorCollection;
 
@@ -10,15 +11,19 @@ use TofuPlugin\Models\ValidationErrorCollection;
  *
  * ```php
  * new ValidationConfig(
- *     rules: [
+ *     [
  *         'name' => 'required|max_len:200',
  *         'email' => 'required|valid_email',
  *     ],
- *     filters: [
+ *     [
  *         'name' => 'trim|sanitize_string',
  *         'email' => 'trim|sanitize_email',
  *     ],
- *     messages: [
+ *     [
+ *         'name' => 'Full Name',
+ *         'email' => 'Email Address',
+ *     ],
+ *     [
  *         'name' => [
  *             'required' => 'The name field is required.',
  *             'max_len' => 'The name must be maximum 200 characters.',
@@ -28,7 +33,7 @@ use TofuPlugin\Models\ValidationErrorCollection;
  *             'valid_email' => 'The email must be a valid email address.',
  *         ],
  *     ],
- *     after: function ($values, $errors) {
+ *     function ($values, $errors) {
  *         // Get the value of the 'name' field
  *         $value = $values->getValue('name');
  *
@@ -45,74 +50,39 @@ use TofuPlugin\Models\ValidationErrorCollection;
  */
 class ValidationConfig
 {
+    /** @var array<string, string> Validation rules. */
+    public $rules;
+
+    /** @var array<string, string> Filtering rules. */
+    public $filters;
+
+    /** @var array<string, string> Field names for error messages. */
+    public $names;
+
+    /** @var array<string, array<string, string>> Validation messages. */
+    public $messages;
+
+    /** @var Closure|null Custom after hook. */
+    public $after;
+
+    /**
+     * @param array<string, string> $rules Validation rules.
+     * @param array<string, string> $filters Filtering rules.
+     * @param array<string, string> $names Field names for error messages.
+     * @param array<string, array<string, string>> $messages Validation messages.
+     * @param Closure|null $after Custom after hook.
+     */
     public function __construct(
-        /**
-         * Validation rules.
-         *
-         * ```php
-         * rules: [
-         *     'name' => 'required|max_len:200',
-         *     'email' => 'required|valid_email',
-         * ],
-         * ```
-         *
-         * @var array
-         * @via https://github.com/Wixel/GUMP?tab=readme-ov-file#available-validators
-         */
-        public readonly array $rules,
-
-        /**
-         * Filtering rules.
-         *
-         * ```php
-         * filters: [
-         *     'name' => 'trim|sanitize_string',
-         *     'email' => 'trim|sanitize_email',
-         * ],
-         * ```
-         *
-         * @var array
-         * @via https://github.com/Wixel/GUMP?tab=readme-ov-file#available-filters
-         */
-        public readonly array $filters,
-
-        /**
-         * Field names for error messages.
-         *
-         * ```php
-         * names: [
-         *     'name' => 'Full Name',
-         *     'email' => 'Email Address',
-         * ]
-         * ```
-         */
-        public readonly array $names,
-
-        /**
-         * Validation messages.
-         *
-         * ```php
-         * messages: [
-         *     'name' => [
-         *         'required' => 'The name field is required.',
-         *         'max_len' => 'The name must be maximum 200 characters.',
-         *     ],
-         *     'email' => [
-         *         'required' => 'The email field is required.',
-         *         'valid_email' => 'The email must be a valid email address.',
-         *     ],
-         * ],
-         * ```
-         *
-         * @var array
-         */
-        public readonly array $messages = [],
-
-        /**
-         * Custom after hook
-         *
-         * @var ?\Closure(FieldValueCollection $values, ValidationErrorCollection $errors):void
-         */
-        public readonly ?\Closure $after = null,
-    ) {}
+        array $rules,
+        array $filters,
+        array $names,
+        array $messages = [],
+        ?Closure $after = null
+    ) {
+        $this->rules = $rules;
+        $this->filters = $filters;
+        $this->names = $names;
+        $this->messages = $messages;
+        $this->after = $after;
+    }
 }
