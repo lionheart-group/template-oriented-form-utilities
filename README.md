@@ -22,52 +22,59 @@ First, you need to setup your form settings.
 add_action('init', function () {
     // Specify template settings
     $template = new \TofuPlugin\Structure\TemplateConfig(
-        inputPath: '/contact/',
-        confirmPath: '/contact/confirm/',
-        resultPath: '/contact/result/',
+        '/contact/',
+        '/contact/result/',
+        '/contact/confirm/'
     );
 
     // Specify mail settings
     $mail = new \TofuPlugin\Structure\MailConfig(
-        fromEmail: 'sample@example.com',
-        fromName: 'Sample Name',
-
-        recipients: new \TofuPlugin\Structure\MailRecipientsCollection([
+        'sample@example.com',
+        'Sample Name',
+        new \TofuPlugin\Structure\MailRecipientsCollection([
             // Auto reply to the user
             new \TofuPlugin\Structure\MailRecipientsConfig(
-                recipientEmail: '{email}',
-                recipientCcEmail: null,
-                recipientBccEmail: null,
-                subjectPath: get_template_directory() . '/form/contact/auto-reply-subject.php',
-                mailBodyPath: get_template_directory() . '/form/contact/auto-reply-body.php',
+                '{email}',
+                null,
+                null,
+                null,
+                get_template_directory() . '/form/contact/auto-reply-subject.php',
+                null,
+                get_template_directory() . '/form/contact/auto-reply-body.php'
             ),
 
             // Send to the admin
             new \TofuPlugin\Structure\MailRecipientsConfig(
-                recipientEmail: 'admin@example.com',
-                recipientCcEmail: null,
-                recipientBccEmail: null,
-                subjectPath: get_template_directory() . '/form/contact/admin-subject.php',
-                mailBodyPath: get_template_directory() . '/form/contact/admin-body.php',
+                'admin@example.com',
+                null,
+                null,
+                null,
+                get_template_directory() . '/form/contact/admin-subject.php',
+                null,
+                get_template_directory() . '/form/contact/admin-body.php'
             ),
-        ]),
+        ])
     );
 
     // Specify validation settings
     $validation = new \TofuPlugin\Structure\ValidationConfig(
-        rules: [
+        // rules
+        [
             'name' => 'required|max_len:200',
             'email' => 'required|valid_email',
         ],
-        filters: [
+        // filters
+        [
             'name' => 'trim|sanitize_string',
             'email' => 'trim|sanitize_email',
         ],
-        names: [
+        // names
+        [
             'name' => 'Full Name',
             'email' => 'Email Address',
         ],
-        messages: [
+        // messages
+        [
             'name' => [
                 'required' => 'Please enter your name.',
                 'max_len' => 'Your name must be within 200 characters.',
@@ -77,9 +84,10 @@ add_action('init', function () {
                 'valid_email' => 'Please enter a valid email address.',
             ],
         ],
+        // after callback
         // $values: \TofuPlugin\Models\FieldValueCollection
         // $errors: \TofuPlugin\Models\ValidationErrorCollection
-        after: function ($values, $errors) {
+        function ($values, $errors) {
             // Custom validation logic can be added here
             $nameValue = $values->getValue('name');
 
@@ -91,12 +99,12 @@ add_action('init', function () {
 
     // Register the form configuration
     \TofuPlugin\Helpers\Form::register(new \TofuPlugin\Structure\FormConfig(
-        key: 'form',
-        name: 'Contact Form',
-        saveToDatabase: false,
-        template: $template,
-        mail: $mail,
-        validation: $validation,
+        'form',
+        'Contact Form',
+        $template,
+        $mail,
+        $validation,
+        false  // saveToDatabase
     ));
 });
 ```
