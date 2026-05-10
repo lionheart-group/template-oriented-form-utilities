@@ -89,12 +89,7 @@ class Migrate
             $migrateClass = require_once TOFU_PLUGIN_DIR . '/migrations/' . $migrate . '.php';
             $sql = $migrateClass->sql();
             Logger::info($sql);
-            if ($migrateClass->useRawQuery()) {
-                // sql() MUST return a $wpdb->prepare()-built string (see Migration::useRawQuery() docblock).
-                $wpdb->query($sql);
-            } else {
-                dbDelta($sql);
-            }
+            dbDelta($sql);
 
             // Save migration key
             $table_name = static::getTableName();
