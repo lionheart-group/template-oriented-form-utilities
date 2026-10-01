@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> **This repository has moved.** Development continues in the monorepo [lionheart-group/wp-template-oriented-plugins](https://github.com/lionheart-group/wp-template-oriented-plugins/tree/master/plugins/template-oriented-form-utilities), with the full history. This repository is archived and no longer updated.
+
 # TOFU
 
 ![TOFU — Template-Oriented Form Utilities for WordPress](.github/banner-1544x500.jpg)
